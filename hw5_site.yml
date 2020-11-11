@@ -1,0 +1,9 @@
+name: "My pm566 hw5"
+navbar:
+  title: "My pm566 hw5"
+  left:
+    - text: "HW5"
+      href: index.html
+output:
+  html_document:
+    theme: cosmo
