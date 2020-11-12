@@ -6,8 +6,18 @@ output:
         toc: TRUE
         toc_float: TRUE
 ---
+<br>
 
-```{r}
+This is my PM566 HW5. 
+
+<br>
+
+<br>
+
+## First Step
+load files first
+
+```{r setup, message=FALSE, echo=FALSE, warning=FALSE}
 knitr::opts_chunk$set(include  = TRUE)
 library(ggplot2)
 library(tidyr)
@@ -31,17 +41,22 @@ opts_chunk$set(
 ```
 
 
-```{r}
+```{r load-data}
 load("/Users/jiqingwu/Desktop/566 Introduction to Health Data Science/midterm/Arrest2010.rda")
 load("/Users/jiqingwu/Desktop/566 Introduction to Health Data Science/midterm/Arrest2019.rda")
 ```
 
+<br>
 
-```{r}
-Arrest2010 %>% filter(Area.Name=="West LA") %>% 
+## Second Step
+These are my code for plots
+
+```{r plot1, class.source="code-r-small"}
+Arrest2019$TimeCode <- recode(Arrest2019$PartOfDay, "dawn"=1,"moring"=2,"afternoon"=3,"night"=4 )
+fig1<-Arrest2019 %>% filter(Area.Name=="West LA") %>% filter(Age<25) %>%
 plot_ly(x = ~Age, y = ~Arrest.Type, 
-        color = ~PartOfDay, type = "scatter", mode = "markers", 
-        size = ~SexCode, sizes = c(5, 10), marker = list(sizemode='diameter', opacity=0.5),
+        color = ~Sex.Code, type = "scatter", mode = "markers", 
+        size = ~TimeCode, sizes = c(10, 50), marker = list(sizemode='diameter', opacity=0.5),
         hoverinfo = 'text',
         text = ~paste( paste("Age: ", Age, sep=""), 
                        paste("Arrest Type: ", Arrest.Type, sep=""), 
@@ -51,18 +66,34 @@ plot_ly(x = ~Age, y = ~Arrest.Type,
 ```
 
 
-```{r}
-g1 <- Arrest2010 %>% filter(Area.Name=="West LA") %>% 
+```{r plot2, class.source="code-r-small"}
+g1 <- Arrest2019 %>% filter(Area.Name=="West LA") %>% 
   plot_ly(x = ~Age, type = "histogram", xbins = list(size = 1, end=30 ))
 g2 <- Arrest2010 %>% filter(Area.Name=="West LA") %>% ggplot( aes(x=Age)) + geom_histogram(binwidth=1)
 g2_plotly <- ggplotly(g2)
-subplot(g1, g2_plotly)
+fig2<-subplot(g1, g2_plotly)
 ```
 
 
-```{r}
-ArrestTable <- Arrest2010 %>% filter(Area.Name=="West LA") %>% 
+```{r plot3, class.source="code-r-small"}
+ArrestTable <- Arrest2019 %>% filter(Area.Name=="West LA") %>% 
   select(Arrest.Date, Time, Arrest.Type, Age, Sex.Code)
-datatable(ArrestTable)
+fig3<-datatable(ArrestTable)
 ```
 
+<br>
+
+## Third Step
+Here are my scatter plot, histogram and tables
+
+```{r fig1}
+fig1
+```
+
+```{r fig2}
+fig2
+```
+
+```{r fig3}
+fig3
+```
