@@ -4,6 +4,9 @@ navbar:
   left:
     - text: "HW5"
       href: index.html
+  right:
+    - text: My github
+      href: https://github.com/jiqingwu1997/PM566-hw5
 output:
   html_document:
     theme: cosmo
